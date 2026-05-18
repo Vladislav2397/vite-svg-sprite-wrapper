@@ -80,7 +80,7 @@ export const defaultOptions: Required<Options> = {
   generateConsts: false,
   constName: 'icons',
   constFileName: 'icons',
-  constOutputDir: 'src'
+  constOutputDir: 'src',
 }
 
 export function resolveOptions(options: Options) {

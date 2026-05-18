@@ -6,19 +6,26 @@ on:
       - 'v*'
 
 jobs:
-  release:
-    permissions:
-      contents: write
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Чек-аут кода
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Настройка Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: '20.x'  # или другая версия, которую вы используете
 
-      - run: npx changelogithub
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Установка зависимостей
+        run: npm ci
+
+      - name: Сборка проекта
+        run: npm run build  # или другая команда, если она отличается
+
+      - name: Загрузка артефакта (опционально)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-artifact
+          path: dist/
